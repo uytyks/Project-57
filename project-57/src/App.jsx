@@ -3,21 +3,32 @@ import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
+  const [cps, setCPS] = useState(0)
+  const [base, setBase] = useState(1)
+
+  //Functions
+  function upgradeBase(value, operation) {
+    if (operation == "add") {
+      setBase(base + value)
+    } else if (operation = "mult") {
+      setBase(base * value)
+    } else {
+      throw new Error("Operation not recognized!");
+    }
+  }
 
   return (
     <>
-      <h1 class="text-3xl font-bold">Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+      <h1>Click Button Yippee</h1>
+      <div class="display">
+        <p class="main">You have <b>{count}</b> clicks</p>
+        <button onClick={() => setCount((count) => count + base)}>
+          Click
         </button>
         <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
+          You have {cps} clicks per second
         </p>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }
