@@ -1,8 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
-import Display from './Display.jsx'
-import './App.css'
+import './Display.css'
 
-function App() {
+function Display() {
   const [count, setCount] = useState(0)
   const [cps, setCPS] = useState(.15)
   const [base, setBase] = useState(1)
@@ -32,9 +31,20 @@ function App() {
 
   return (
     <>
-      <Display />
+      <h1>Click Button Yippee</h1>
+      <div class="display">
+        <p class="main">You have <b>{count.toFixed(2)}</b> clicks</p>
+        <button onClick={() => {
+          setCount((count) => count + base)
+          }}>
+          Click
+        </button>
+        <p>
+          You have {cps} clicks per second
+        </p>
+      </div>
     </>
   )
 }
 
-export default App
+export default Display
