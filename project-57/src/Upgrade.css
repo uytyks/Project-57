@@ -2,43 +2,32 @@
   margin: 0 auto;
 }
 
-.display {
-  max-width: 500px;
-  margin: 0 auto;
+.upbox {
+  width: 150px;
+  height: 150px;
+  margin: auto;
   text-align: center;
-  padding: 2em;
+  padding: 1em;
   background-color: #666;
   border-radius: 25px;
   display: flex;
   flex-direction: column;
   place-items: center;
-}
-
-.display button {
-  border-radius: 200px;
   border: 1px solid transparent;
   padding: .6em 1.2em;
-  font-size: 30px;
+  font-size: 15px;
   font-weight: 500;
   font-family: inherit;
   background-color: #aaaaaa;
   cursor: pointer;
   transition: border-color 0.25s;
+  margin-right: 1em;
 }
-.display button:hover {
+.upbox:hover {
   border-color: #ffffff;
+  background-color: #b0b0b0;
 }
-.display button:focus,
-.display button:focus-visible {
+.upbox:focus,
+.upbox:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
-}
-
-.display .main {
-  font-size: 20px;
-}
-
-.upgrades {
-  display: flex;
-  list-style: none;
-  padding: 0;
 }

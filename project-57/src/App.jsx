@@ -20,10 +20,6 @@ function App() {
     }
   }
 
-  //Global Timers/Checks
-  // useEffect(() => {
-  //     setCPS((cps) => Math.round(count * 100)/100);
-  //   },[count]);
   
   useEffect(() => {let timer = setInterval(() => {
       setCount(count => count + cpsRef.current);
