@@ -1,33 +1,49 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import './Display.css'
 import Upgrade from './Upgrade.jsx'
 
 
 function Display() {
   const [count, setCount] = useState(0)
-  const [cps, setCPS] = useState(.15)
+  const [cps, setCPS] = useState(1)
   const [base, setBase] = useState(1)
-  const cpsRef = useRef(cps);
-  cpsRef.current = cps;
+  const [mult, setMult] = useState(1)
+  const [upgradesEnabled, setUpgradesEnabled] = useState({
+  clicks4: false,
+  whatever: false,
+  whatever2: false,
+});
+
+  const ticksPerSecond = 60;
+  const tickInterval = 1000 / ticksPerSecond;
 
   const upgrades = [{
   cost: 1,
-  name: "Points yippee",
+  name: "+1 Base Clicks per second",
   action: function(){
-    setCPS((cps) => cps * 2)
+    setBase((base) => base + 1)
+  }
+  },{
+  cost: 15,
+  name: "X2.5 Clicks per second multiplier",
+  action: function(){
+    setMult(2.5)
+  }
+  },{
+  cost: 40,
+  name: "+2 MORE to Base Clicks",
+  action: function(){
+    setBase((base) => base + 2)
+  }
+  },{
+  cost: 100,
+  name: "10% of clicks added to base",
+  action: function(){
+    activateUpgrade("clicks4");
   }
   },{
   cost: 200,
-  name: "More point?"
-  },{
-  cost: 300,
-  name: "Increm :(("
-  },{
-  cost: 400,
-  name: "Die"
-  },{
-  cost: 1000,
-  name: "Die (real)"
+  name: "Let loose the gates of hell" //Unlocks next layer
   }];
 
   const upgradeButtons = upgrades.map((upgrade, index) => (
@@ -54,10 +70,26 @@ function Display() {
     return false;
   }
 
+  function activateUpgrade(name) {
+    setUpgradesEnabled(prev => ({
+      ...prev,
+      [name]: true
+    }));
+  }
+
+  //Reactive Changes
+  //Updates count every time cps changes
   useEffect(() => {let timer = setInterval(() => {
-      setCount(count => count + cpsRef.current);
-    }, 1000);
-    return () => clearInterval(timer);},[]);
+    let perTick = cps / ticksPerSecond;
+    setCount(count => parseFloat((count + perTick).toFixed(2)));
+    }, tickInterval);
+    return () => clearInterval(timer);},[cps]);
+
+  //Updates cps every time base or mult changes
+  useEffect(() => {
+    const uClicks4 = upgradesEnabled.clicks4 ? count * 0.01 : 0; //Adds clicks4 upgrade if purchased
+    setCPS((base + uClicks4) * mult);
+    }, [base, mult, count]);
 
   return (
     <>
@@ -65,7 +97,7 @@ function Display() {
       <div className="display">
         <p className="main">You have <b>{count.toFixed(2)}</b> clicks</p>
         <p>
-          You have {cps} clicks per second
+          You have {cps.toFixed(2)} clicks per second
         </p>
       </div>
       <ul className="upgrades">{upgradeButtons}</ul>
